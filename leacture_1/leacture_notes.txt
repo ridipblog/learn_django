@@ -1,0 +1,10 @@
+1. CREATE PROJECT ->
+    django-admin startproject leacture_1
+2. CREATE APPLICATION NAME COURSE ->
+3. EDIT leacture_1/settins.py file to install course application ->
+    INSTALLED_APPS=[
+        'course
+    ]
+4. Edit course/views.py file to write view logic ->
+5. edit leacture_1/urls.py file to store url  ->
+6. python manage.py runserver

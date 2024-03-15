@@ -39,3 +39,39 @@ CHAPTER 3->
                 return HttpResponse('Hello World')
             def learn_python(request):
                 return HttpResponse('<h1>Hello world</h1>')
+
+CHAPTER 4->
+    1) SINGLE APPLICATION WITH SINGLE VIEW FUNCTION ->
+        EXAMPLE 1->
+            views.py->
+
+            from django.http import HttpResponse
+            def learn_django(request):
+                return HttpResponse('Hello Django')
+            
+            urls.py ->
+
+            urlpatterns=[
+                path('admin/',admin.site.urls),
+                path('learndj/',views.learn_django)
+            ]
+            
+CHAPTER 5->
+    1) SINGLE APPLICATION WITH MULTIPLE VIEW FUNCTIONS ->
+        EXAMPLE 1->
+            views.py->
+
+            from django.http import HttpResponse
+            def learn_django(request):
+                return HttpResponse('Hello Django')
+
+            def learn_python(request):
+                return HttpResponse('Hello Python')
+            
+            urls.py ->
+
+            urlpatterns=[
+                path('admin/',admin.site.urls),
+                path('learndj/',views.learn_django),
+                path('learndj/',views.learn_python)
+            ]
