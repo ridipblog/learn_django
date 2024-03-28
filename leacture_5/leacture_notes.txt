@@ -1,0 +1,111 @@
+-------------------------STATIC FILES ----------------------------
+1.django provides django.contrib.staticfiles to help you manage them.
+2. django.contrib.staticfiles collects static files from each of your applications(and any other places you spacify) into
+    a single location that can easily be served in production.
+-------------- HOW TO CREATE STATIC FOLDER AND FILES -----------------------
+1. We create static folder inside Root project folder then inside static folder we create required folders
+    which will contain all static files respectivly like css folder will contain all css files.
+    folders will contain images.
+---------------- ADD STATIC IN SETTING.PY ---------------------
+1. settings.py ->
+    TEMPLATES_DIR=BASE_DIR/'templates'
+    STATIC_DIR=BASE_DIR / 'static'
+
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [TEMPLATES_DIR],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
+        },
+    ]
+
+    STATIC_URL = 'static/'
+
+    STATICFILES_DIRS = [
+        BASE_DIR / "static",
+        "/var/www/static/",
+    ]
+--------------------- USE STATIC FILES IN TEMPLATE FILES ---------------------
+1. first load static files
+2. reference static files
+syntax 1->
+    <!doctype html>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <h1>
+    {{ fe }}
+    </h1>
+    <img src="{% static 'images/anime.jpg' %}">
+
+----------------LOAD TEMPLATE TAG ---------------
+1. {% load module_name %} -> It loads a custom template tag set.
+SYNTAX 1->
+    EXAMPLE 1-> {% load emotags %}
+    EXAMPLE 2-> {% load geek.mytags %}
+    EXAMPLE 3-> {% emotags geek.mytags %}
+        a. Template would load all tags and filters registered in emotags and mytags located in package geek.
+    1. You can also selectivly load indivual filters or tags from a libery or module, using the from argument.
+    EXAMPLE 1-> {% load cry lol from emotags %}
+        a.the template tags filters named cry and lol will be loaded from emotags.
+
+-------------- STATIC TEMPLATES TAG--------------
+1. {% static filename %} -> This is used to link to static files that are saved in STATIC_ROOT. If the django.contrib.staticfiles
+    app is installed, the tag will serve file using url() method of staorage specified by STATICFILES_STORAGE
+
+SYNTAX 1->
+    {% load static %}
+    {% static filename %}
+    {% static path/filename %}
+    {% static filename as name %}
+EXAMPLE 1->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <img src="{% static 'images/anime.jpg' %}">
+    {% static "images/robot.png as robot %}
+    <img src="{{ robot }}">
+------------------- get_static_prefix Template Tag ----------------------------
+1. {% get_static_prefix %} -> We should prefer the static template tag, but if oyu need more control over
+    exactly where and how STATIC_URL is injected into the template , you can use the get_static_prefix template tag.
+    EXAMPLE 1->
+        {% load static %}
+        <img src="{% get_static_prefix %}images/anime.png">
+2. There also a second form you can use to avoid extra processing if you need the value multiple times.
+    EXAMPLE 1->
+        {% load static %}
+        {% get_static_prefix as STATIC_PREFIX %}
+        <img src="{{ STATIC_PREFIX }}images/pic.png">
+
+STATIC_URL -> This is the URL to use when referring to static file located in STATIC_ROOT. It must end in a slash
+    if set to a non-empty value.
+        EXAMPLE 1-> "/static"
+STATIC_ROOT -> this is absolute path to the directory where collectstatic will collect static files for deployement. It
+    is by default None.
+        EXAMPLE 1-> "/var/www/example.com/static/"
+        example 2-> os.path.join(BASE_DIR,'static/')
+STATICFILES_DIRS -> This setting defines the additional location the staticfiles app will traverse if the
+    FileSystemFinder finder is enabled, If you use the collectstatic or findstatic management command or use
+    the STATICFILES_DIRS=[
+        BASE_DIR / "static",
+        "/var/www/static/",
+    ]
+STATICFILES_STORAGE -> The files storage engine to use collecting static files with the collectstatic management command.
+    Default:'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+------------------------- PROJECT CODE INSTRUCTION -------------------------
+1. make a project ->
+    django-admin startproject leacture_5
+2. make a application ->
+    python manage.py startapp myapp
+3. install application in settings.py
+4. create 'templates' folder on outer project folder.
+5. create 'templates' folder on 'myapp/' folder.
+6. create 'myapp' folder on 'myapp/templates/' folder.
+7. create two html files on 'myapp/templates/myapp' folder.
+8. create 'static' folder on outer project folder.
