@@ -1,0 +1,22 @@
+{% load static %}
+{% static 'images/image-2.png' as image_2 %}
+{% static get_static_prefix as STATIC_PREFIX %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+
+<body>
+    <h1>{{ language }}</h1>
+    <img src="{% static 'images/image-1.png' %}" alt="" />
+    <img src="{{ image_2 }}" alt="" />
+    <button onclick="fun_1()">Click Me</button>
+    <script src="{{ STATIC_PREFIX }}js/actions.js"></script>
+</body>
+
+</html>

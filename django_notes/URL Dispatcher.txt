@@ -1,0 +1,107 @@
+------------------------------------------ URL DISPATCHER ------------------------------------------
+CHAPTER 1->
+    1. To deign URL for app,you create a python module informally named urls.py 
+    This module is pure python code and is a mapping between URL path expession to view funtions.
+    2.This mapping can be as short or as long as needed.
+    3. It can reference other mappings.
+    4.It's pure python code so it can be constructed dynamiclly.
+    urls.py->
+        urlpatterns=[
+            path(route,view,kwargs=None,name=None)
+        ]
+    urls.py->
+        urlpatterns=[
+            path('/learndj',views.learn_django)
+        ]
+
+CHAPTER 2->
+-------------------- PATH()------------------------
+    *. path(route,view,kwargs=None,name=None) -  It returns an element for inclusion in urlpatterns.
+    Where,
+    1.The route argument should be string or gettext_lazy() that contains a URL pattern. The string may contain angle brackets e.g.
+    <username> to capture part of the URL and send it as a keyword argument to the view. The angle brackets may inclusion a
+    converter specification like the int part of <int:id> which limits the charaters matched and may also change the type of the,
+    variable passed to the view. For example, <int:id>
+    matches a string of decimal digits and converts the value to an int.
+    2.The view argument is a view function or the result of as_view() for class-based views. It can also be an django.urls.include().
+    3. The kwargs argument allows you to pass additional arguments to the view function or method. It should be a distionay.
+    4.name is used to perform URL reversing.
+    SYNTAX 1 ->
+        urls.py->
+            urlpatterns=[
+                path(route,view,kwargs=None,name=None)
+            ]
+        urls.py->
+            urlpatterns=[
+                path('learndj/',views.learn_django,{'check':'Ok'},name='learn_django')
+            ]
+
+
+CHAPTER 3->
+----------------------------------------- INCLUDE()-------------------------
+1. A function that takes a full python import path to another URL conf mosule that should be "included " in  this place.
+2. Optionaaly the application namespace and instance namespace where the entries will be included into can also be spacified.
+3 include() also accespts as an argument either an iterable that returns URL patterns or a 2 tuple containg such iterable plus the names of the application namespace.
+4. urlpatterns can "include" other URLconf modules.
+SYNTAX 1   ->
+    include(module,namespace=None)
+    include(pattern_list)
+    include((pattern_list,app_namespace),namespace=None)
+    Where,
+        module - URLconf module (or module name)
+        namespace(str) - instance namespace for the URL entries besing included
+        pattern_list - Iterable of path() and /or re_path() instance.
+        app_namespace(str) -> Application namespace for the URL entries being included
+SYNTAX 1  ->
+    include(module,namespace=None)
+    include(pattern_list)
+    include((pattern_list,app_namespace),namespace=None)
+
+EXAMPLE 1->
+    from django.urls import include,path
+    urlpatterns=[
+        path("cor/",include('course.urls'))
+    ]
+    urlpatterns=[
+        path("cor/",include(
+            [
+                path("learn_dj/",views.learn_django),
+                path("learn_py/",views.learn_python),
+            ]
+        ))
+    ]
+
+    Notes->
+        path(route,view,kwargs=None,,name=None)
+        The view argument is a view function or the result of as_view() for class-based views.It  can also be an django.urls.include().
+
+
+CHAPTER 4->
+------------------------- WRITE URL PATTERN INSIDE APPLICATION----------------------------
+1. create an urls.py inside each application (in case multiple application).
+2. Write all url pattern related to application, in urls.py file available inside application.
+3. Include Application's urls.py file inside Project's urls.py file.
+
+views.py in Application Folder->
+    from django.http import HttpResponse
+    def learn_django(request):
+        return HttpResponse('Hello Django')
+
+    def learn_python(request):
+        return HttpResponse('Hello Python')
+
+urls.py in Application Folder->
+    from course import views
+    urlpatterns=[
+        path('learndj/',views.learn_django),
+        path('learnpy/',views.learn_python)
+    ]
+urls.py in Project Folder->
+    from django.urls import path,include
+    urlpatterns=[
+        path('cor/',include('course.urls')),
+    ]
+
+Notes.->
+    1.http://location:8000/cor/learn_dj
+    2.http://location:8000/cor/learn_py

@@ -1,0 +1,66 @@
+--------------------TEMPLATES ---------------------
+1.A template is a text file.It can generate any text-based format(HTML,XML,CSV,etc).
+2. A template contains variables, which get replaced with values when the template is evaluated, and tags, which control the logic of the template.
+3. Template is used by view function to represent the data to user.
+4. User sends request to view then view contact template afterthat view get information from the template and then view gives response to the users.
+
+----------- CREATE TEMPLATES FOLDER AND FILES------------------
+1 We create templates folder inside Project Folder. templates folder will contain all html files.
+
+---------- ADD TEMPLATES IN settings.py----------------------
+1.settings.py ->
+    TEMPLATES_DIR=BASE_DIR/'templates'
+    TEMPLATES = [
+        {
+            'DIRS': [TEMPLATES_DIR],
+        },
+    ]
+
+-------------------- RENDERING TEMPLATES FILES -----------------
+1.By creating templates file for application we separate business logic and presentaition from the application views.py file . 
+Now we will write business logic in views.py file and presentation code in html file.
+
+2. Still views.py will be responsible to process the template files for this we will use render() function in views.py file.
+
+views.py ->
+    from django.shortcuts import render
+    def function_name(request):
+    Dynamic Data , if else , any python code logic
+
+    return render(request,template_name,context=dict_name,content_type=MIME_type,status=None,using=None)
+
+    def home(request):
+    return render(request,'home')
+
+------------------------- RENDER --------------------
+1. render() Function - It combines a given template with a given context dictionary and returns an HttpResponse object with that rendered text.
+SYNTAX->
+    1. render(request,template_name,context=dict_name,content_type=MIME_type,status=None,using=None)
+    Where,
+        request - The request object used to generate this response.
+        template_name - The full name of a template to use or sequence of template names . Is a sequence
+        is given the frist template that exists will be used.
+        context - A dictionary of values to add to the template context. By default, this is an empty dictionary. If a
+        value in the dictionary is callable, the view will call it just before rendering the template.
+        content_type - The MIME type to use for the resulting document. Default to 'text/html'.
+        status - The status code for the response. Default to 200.
+        using - The Name of a template engine to use fr loading the template.
+
+------------------------- PROJECT CODE INSTRUCTION -------------------------
+1. make a project ->
+    django-admin startproject leacture_4
+2. make a application ->
+    python manage.py startapp myapp
+3. install application in settings.py
+4. create 'templates' folder under outer project folder.
+5. create 'home.html' file under 'templates/' folder.
+6. edit 'myapp/views.py' file ->
+7. edit  'myapp/urls.py' file ->
+8. edit settings.py ->
+    TEMPLATES_DIR=BASE_DIR/'templates'
+    TEMPLATES = [
+        {
+            'DIRS': [TEMPLATES_DIR],
+        },
+    ]
+9. edit 'urls.py' ->

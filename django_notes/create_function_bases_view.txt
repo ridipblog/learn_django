@@ -1,0 +1,77 @@
+-------------------------------------FUNCTION BASED VIEW --------------------------------
+CHAPTER 1->
+    1) a function based view , a python function that takes a web request and reqturn a web respnse.
+    2) This response can be the HTML content of a web page or a redirect or a 404 error ,or an XML document, or an image or anything.
+    3) Each view function takes an HttpRequest object as its first parameter.
+    4) The view returns HttpResponse object that contact the generated response. Each view function is responsile an HttpResponse object.
+
+    SYNTAX 1 ->
+        def function_name(request):
+            return HttpResponse('html/variable/text')
+
+        DEFINATION OF EXAMPLE 1 ->
+            request -> HttpRequest object
+            HttpResponse -> It is class
+            ('html/variable/text') -> HttpResponse Object
+
+CHAPTER 2->
+    1) We use views.py file of the application to write functions which may contain busines logic of application,
+    later it required to define url name fot this function in the urls.py file of the project.
+
+    SYNTAX 1->
+        views.py->
+            def function_name_1(request):
+                return HttpResponse('html/variable/text')
+
+            def function_name_2(request):
+                return HttpResponse('html/variable/text')
+
+CHAPTER 3->
+    SYNTAX 1->
+        views.py->
+            def function_name_1(request):
+                return HttpResponse('html/variable/text')
+    1) Where HttpResponse is class which is in sjango.http module so we have to import it before using HttpResponse.
+    EXAMPLE 1->
+        views.py->
+            from django.http import HttpResponse
+            def learn_django(request):
+                return HttpResponse('Hello World')
+            def learn_python(request):
+                return HttpResponse('<h1>Hello world</h1>')
+
+CHAPTER 4->
+    1) SINGLE APPLICATION WITH SINGLE VIEW FUNCTION ->
+        EXAMPLE 1->
+            views.py->
+
+            from django.http import HttpResponse
+            def learn_django(request):
+                return HttpResponse('Hello Django')
+            
+            urls.py ->
+
+            urlpatterns=[
+                path('admin/',admin.site.urls),
+                path('learndj/',views.learn_django)
+            ]
+            
+CHAPTER 5->
+    1) SINGLE APPLICATION WITH MULTIPLE VIEW FUNCTIONS ->
+        EXAMPLE 1->
+            views.py->
+
+            from django.http import HttpResponse
+            def learn_django(request):
+                return HttpResponse('Hello Django')
+
+            def learn_python(request):
+                return HttpResponse('Hello Python')
+            
+            urls.py ->
+
+            urlpatterns=[
+                path('admin/',admin.site.urls),
+                path('learndj/',views.learn_django),
+                path('learndj/',views.learn_python)
+            ]
