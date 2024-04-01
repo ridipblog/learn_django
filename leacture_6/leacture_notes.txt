@@ -1,0 +1,5 @@
+------------------- CREATE TEMPLATE AND RENDERING TEMPLATE--------------------
+1. We can create separate folder inside templates folder for application then each application
+    will contain only those html file which are related to them.This will enchane readability
+    and separate html files according to applications.
+------------------- DYNAMIC TEMPLATE FILES USING DTL---------------------------
